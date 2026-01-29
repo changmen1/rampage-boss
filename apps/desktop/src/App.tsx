@@ -32,12 +32,13 @@ function App() {
 
   const [isHit, setIsHit] = useState(false)
   const [isBruised, setIsBruised] = useState(false)
-
+  let tim: any;
   const handleFlyingKick = () => {
-    window.ipcRenderer.send('attack-flying-kick')
+    // window.ipcRenderer.send('attack-flying-kick')
+    if (tim) return
     setIsHit(true)
     setIsBruised(true)
-    setTimeout(() => { setIsHit(false), setIsBruised(false) }, 600)
+    tim = setTimeout(() => { setIsHit(false), setIsBruised(false) }, 1800)
   }
 
   if (currentView === 'settings') {
@@ -68,12 +69,6 @@ function App() {
       <div className='attack'>
         <button onClick={handleFlyingKick} className="game-Xbtn attack-btn" title="飞踢">
           踢
-        </button>
-        <button onClick={handleFlyingKick} className="game-Xbtn attack-btn" title="飞踢">
-          肘
-        </button>
-        <button onClick={handleFlyingKick} className="game-Xbtn attack-btn" title="飞踢">
-          扇
         </button>
       </div>
       <div className={`content ${isHit ? 'boss-hit' : ''}`}>

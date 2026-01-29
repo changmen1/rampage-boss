@@ -5,9 +5,9 @@ interface BossProps {
 const BossCharacter = ({ isBruised }: BossProps) => {
     return (
         <svg
-            width="100"
-            height="100"
-            viewBox="0 0 200 200"
+            width="180"
+            height="180"
+            viewBox="0 0 200 250"
             xmlns="http://www.w3.org/2000/svg"
             style={{
                 filter: 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.3))',
@@ -33,20 +33,31 @@ const BossCharacter = ({ isBruised }: BossProps) => {
 
             }
 
-            {/* 连体衣/套装 */}
-            <path d="M40 180 C40 130, 160 130, 160 180 L160 210 L40 210 Z" fill="#2c3e50" />
+            {/* Q版小身体 (Body - Small & Trapezoid) */}
+            <path d="M75 160 L125 160 L135 210 L65 210 Z" fill="#2c3e50" />
 
-            {/* 衬衫领 */}
-            <path d="M75 180 L100 205 L125 180 L100 160 Z" fill="white" />
+            {/* 领子 (Collar) */}
+            <path d="M85 160 L100 180 L115 160" fill="white" />
 
-            {/* 领带 */}
-            <path d="M100 160 L115 200 L100 215 L85 200 Z" fill="#c0392b" />
+            {/* 领带 (Tie - Short & Cute) */}
+            <path d="M100 160 L108 185 L100 195 L92 185 Z" fill="#c0392b" />
+
+            {/* 短腿 (Legs) */}
+            <path d="M80 210 L80 230 L70 230" fill="none" stroke="#2c3e50" strokeWidth="10" strokeLinecap="round" />
+            <path d="M120 210 L120 230 L130 230" fill="none" stroke="#2c3e50" strokeWidth="10" strokeLinecap="round" />
+
+            {/* 短手 (Arms - Crossed or hanging) */}
+            {/* Left Arm */}
+            <path d="M75 170 Q60 180 65 195" fill="none" stroke="#2c3e50" strokeWidth="10" strokeLinecap="round" />
+            {/* Right Arm */}
+            <path d="M125 170 Q140 180 135 195" fill="none" stroke="#2c3e50" strokeWidth="10" strokeLinecap="round" />
 
             {/* 耳朵 */}
-            <circle cx="40" cy="95" r="16" fill="#e0b16c" />
-            <circle cx="160" cy="95" r="16" fill="#e0b16c" />
+            <circle cx="40" cy="95" r="14" fill="#e0b16c" />
+            {/* 模拟被揪耳朵的形态*/}
+            <circle cx="160" cy="95" r="14" fill="#e0b16c" />
 
-            {/* 头 */}
+            {/* 头 (Head - Big) */}
             <circle cx="100" cy="90" r="65" fill="url(#skinGradient)" />
 
             {/* 瘀伤和伤口（绘制在皮肤表面，眼镜下方） */}

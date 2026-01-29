@@ -1,135 +1,51 @@
-# Turborepo starter
+# 暴走老板
 
-This Turborepo starter is maintained by the Turborepo core team.
+## 1. 核心交互增强：不仅仅是点击
 
-## Using this example
+* **物理碰撞反馈：** 鼠标拖动角色时，角色应该有物理拉伸感（弹性），松手后角色会像皮筋一样弹回原位。
+* **多维攻击方式：** * **连点模式：** 快速点击触发“疯狂乱揍”，角色表情逐渐变得鼻青脸肿。
+* **拖拽投掷：** 抓住角色扔向屏幕边缘，反弹回来造成伤害。
+* **道具互动：** 除了左右侧的技能，增加“拖拽外部文件到角色身上”的彩蛋，例如把一个 `.txt` 扔过去，角色会被书本砸晕。
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+## 2. 数值与策略性：让“刷伤害”有成就感
 
-## What's inside?
+加入简单的 RPG 元素：
 
-This Turborepo includes the following packages/apps:
+* **Combo 连击系统：** 连续攻击不中断，背景音乐频率加快，伤害倍率提升。
+* **怒气槽（Rage Bar）：** 角色受到的伤害越多，背景颜色越红，最终触发“老板暴走”阶段，反击你的鼠标，增加挑战性。
+* **掉落金币/碎片：** 击败后掉落虚拟币，用于解锁新的“卡通滤镜”或更酷炫的“攻击特效”。
 
-### Apps and Packages
+---
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## 3. 视觉与特效升级
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+* **损伤分级：** * **100%血量：** 意气风发、西装革履。
+* **50%血量：** 领带歪斜、满头大汗。
+* **10%血量：** 鼻青脸肿、举白旗。
+* **粒子系统：** 攻击时不仅有音乐，还要有纸屑、金币或“工作任务单”飞散的粒子效果。
 
-### Utilities
+---
 
-This Turborepo has some additional tools already setup for you:
+## 4. 完善后的功能结构表
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+| 模块 | 完善建议 | 目的 |
+| --- | --- | --- |
+| **角色转换** | 增加“情绪识别”，转换后的卡通形象可以根据血量自动切换表情包。 | 增加代入感 |
+| **攻击类型** | 划分为：轻击（快速）、重击（蓄力）、特殊（带冷却时间）。 | 增加操作层次 |
+| **求饶动画** | 增加“录音/文字弹幕”，老板会说：“这周不加班了！”、“给你涨薪！”。 | 强化解压心理需求 |
+| **系统常驻** | 增加“老板巡逻”模式。角色偶尔在任务栏上方走动，点击可将其抓回。 | 增加趣味互动 |
+| **设置面板** | 增加“透明度调节”和“静音模式”，防止在办公室玩太明显。 | 实用性优化 |
 
-### Build
+---
 
-To build all apps and packages, run the following command:
+## 5. 技术实现的关键点 (Electron)
 
-```
-cd my-turborepo
+置顶且透明，核心技术点：
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+1. **窗口穿透：** 使用 `win.setIgnoreMouseEvents(true, { forward: true })` 来处理透明区域不遮挡下方窗口的操作，只有鼠标移入角色本体时才捕获事件。
+2. **性能优化：** 这种应用会有大量动画，建议使用 **Canvas** 或 **WebGPU/WebGL** 渲染攻击特效，避免 DOM 操作导致卡顿。
+3. **Canvas 抠图：** 针对“透明化人物背景”，可以集成一个轻量级的 `remove.bg` API 或者本地部署简单的 `ONNX` 模型进行实时抠图。
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+---

@@ -1,34 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/electron-vite.animate.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import BossCharacter from './components/BossCharacter'
+import Settings from './components/Settings'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentView, setCurrentView] = useState('main')
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#/', '')
+      setCurrentView(hash === 'settings' ? 'settings' : 'main')
+    }
+
+    handleHashChange()
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  const handleMinimize = () => {
+    window.ipcRenderer.send('minimize-window')
+  }
+
+  const handleClose = () => {
+    window.ipcRenderer.send('close-window')
+  }
+
+  const handleOpenSettings = () => {
+    window.ipcRenderer.send('open-settings')
+  }
+
+  const [isHit, setIsHit] = useState(false)
+  const [isBruised, setIsBruised] = useState(false)
+
+  const handleFlyingKick = () => {
+    window.ipcRenderer.send('attack-flying-kick')
+    setIsHit(true)
+    setIsBruised(true)
+    setTimeout(() => { setIsHit(false), setIsBruised(false) }, 600)
+  }
+
+  if (currentView === 'settings') {
+    return <Settings />
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://electron-vite.github.io" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="app-container">
+      <div className="actions-layer">
+        <button onClick={handleMinimize} className="game-btn minimize-btn" title="隐藏">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M5 11h14v2H5z" />
+          </svg>
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+        <button onClick={handleOpenSettings} className="game-btn settings-btn" title="设置">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.49l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" />
+          </svg>
+        </button>
+
+        <button onClick={handleClose} className="game-btn close-btn" title="关闭">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <div className='attack'>
+        <button onClick={handleFlyingKick} className="game-Xbtn attack-btn" title="飞踢">
+          踢
+        </button>
+        <button onClick={handleFlyingKick} className="game-Xbtn attack-btn" title="飞踢">
+          肘
+        </button>
+        <button onClick={handleFlyingKick} className="game-Xbtn attack-btn" title="飞踢">
+          扇
+        </button>
+      </div>
+      <div className={`content ${isHit ? 'boss-hit' : ''}`}>
+        <BossCharacter isBruised={isBruised} />
+      </div>
+    </div>
   )
 }
 
